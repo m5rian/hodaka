@@ -25,14 +25,15 @@ public class HodakaBot {
     public static Config config;
 
     public static void main(String[] args) throws LoginException, InterruptedException {
-        jda = JDABuilder.create("ODU3OTgxNTg5MTM3MTI5NDcy.YNXfnw._nQ7kiMeEdlA_hX2YR5TfLrQi7k", Arrays.asList(GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MEMBERS))
+        config = Config.init();
+        jda = JDABuilder.create(config.token, Arrays.asList(GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MEMBERS))
                 .addEventListeners(
                         new Listeners(),
                         new CommandListener(COMMAND_SERVICE))
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .build()
                 .awaitReady();
-        config = Config.load();
+        config.load();
     }
 
 }
