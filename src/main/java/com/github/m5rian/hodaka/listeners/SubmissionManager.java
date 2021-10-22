@@ -37,12 +37,12 @@ public class SubmissionManager {
 
             final long timeCreated = submission.getTimeCreated().toInstant().toEpochMilli();
             // Time to react is over
-            if (timeCreated + Double.parseDouble(config.submissionEvaluation) * config.DAY_IN_MILLIS > System.currentTimeMillis()) {
+            if (timeCreated + TimeUnit.DAYS.toMillis(Long.parseLong(config.submissionEvaluation)) > System.currentTimeMillis()) {
                 evaluateReactions(submission.getId()); // Evaluate reactions
             }
             // Still time to react
             else {
-                final long delay = Math.round(System.currentTimeMillis() - Double.parseDouble(config.submissionEvaluation) * config.DAY_IN_MILLIS + timeCreated);
+                final long delay = Math.round(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(Long.parseLong(config.submissionEvaluation)) + timeCreated);
                 System.out.println("Milliseconds to wait until design auswertung" + TimeUnit.MILLISECONDS.toMinutes(delay));
                 submissionWaiters.put(userId, submission.getId()); // Put design in waiting queue
                 new Timer().schedule(new TimerTask() {
@@ -106,7 +106,7 @@ public class SubmissionManager {
                 public void run() {
                     evaluateReactions(submissionMessage.getId());
                 }
-            }, Math.round(Double.parseDouble(config.submissionEvaluation) * config.DAY_IN_MILLIS));
+            }, Math.round(TimeUnit.DAYS.toMillis(Long.parseLong(config.submissionEvaluation))));
 
             event.getMessage().delete().queue(); // Delete original message
         });

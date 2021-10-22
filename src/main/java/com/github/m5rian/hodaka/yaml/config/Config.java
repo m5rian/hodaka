@@ -43,8 +43,6 @@ public class Config {
 
     @JsonProperty
     public String submissionEvaluation; // Days until to evaluate the reactions
-    public final Long DAY_IN_MILLIS = 6400000L;
-
 
     public static Config init() {
         Config config = null;
