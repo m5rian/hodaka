@@ -17,8 +17,6 @@ import java.util.List;
 
 public class Config {
     @JsonProperty
-    public String token;
-    @JsonProperty
     public String guildId;
     @JsonProperty
     public Prefixes prefixes;
@@ -43,8 +41,10 @@ public class Config {
 
     @JsonProperty
     public String submissionEvaluation; // Days until to evaluate the reactions
+    public final Long DAY_IN_MILLIS = 6400000L;
 
-    public static Config init() {
+
+    public static Config load() {
         Config config = null;
         try {
             final URL url = Packs.class.getClassLoader().getResource("config.yaml");
@@ -53,20 +53,20 @@ public class Config {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return config;
-    }
 
-    public void load() {
-        final Guild guild = HodakaBot.jda.getGuildById(guildId);
+        final Guild guild = HodakaBot.jda.getGuildById(config.guildId);
 
-        designerRolesCount = (int) guild.getRoles().stream().filter(role -> role.getName().startsWith(designerRolePrefix)).count();
+        Config finalConfig = config;
+        config.designerRolesCount = (int) guild.getRoles().stream().filter(role -> role.getName().startsWith(finalConfig.designerRolePrefix)).count();
 
-        final java.util.List<Role> roles = guild.getRoles();
+        final List<Role> roles = guild.getRoles();
         List<Role> sortedRoles = new ArrayList<>(roles);
         Collections.reverse(sortedRoles);
-        designerRolesPositionStart = sortedRoles.stream().filter(role -> role.getName().startsWith(designerRolePrefix)).findFirst().get().getPosition();
+        config.designerRolesPositionStart = sortedRoles.stream().filter(role -> role.getName().startsWith(finalConfig.designerRolePrefix)).findFirst().get().getPosition();
 
-        green = Color.decode(colours.green);
-        red = Color.decode(colours.red);
+        config.green = Color.decode(config.colours.green);
+        config.red = Color.decode(config.colours.red);
+
+        return config;
     }
 }

@@ -1,0 +1,31 @@
+# General
+guildId: "847047197316218880"
+prefixes:
+  symbols:
+    channels: "〢"
+  emojis:
+    unbans:
+      accept: "🔓"
+      deny: "🔒"
+# Colours
+colours:
+  green: "#56f07f"
+  red: "#eb4242"
+# Roles
+roles:
+  member: "847047197320806436"
+  moderators:
+    - "847047197336928313"
+    - "847047197336928307"
+# Text channels
+channels:
+  designSubmissions: "847047197564338213"
+  voice: "872459862972465172"
+  unbanRequest: "874330012730421278"
+  banLog: "874591697210839111"
+# Categories
+categories:
+  unbanRequests: "874358673495953418"
+  achievedUnbanRequests: "874359911654498304"
+designerRolePrefix: "🎨〢"
+submissionEvaluation: "0.005" # Days until to evaluate the reactions

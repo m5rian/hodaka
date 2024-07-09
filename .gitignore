@@ -1,5 +1,3 @@
 .gradle
 .idea
 build
-src/main/resources/config.yaml
-src/main/resources/packs.yaml
